@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#070707">
+  <meta name="description" content="Ayush Sachdeva — programmer, builder, and creator of JEEwise, Chemory and Physora.">
+  <title>Ayush Sachdeva — Programmer & Builder</title>
+  <link rel="icon" href="assets/profile.png">
+  <style>
+    @font-face{
+      font-family:Englebert;
+      src:url("assets/Englebert-Regular.ttf") format("truetype");
+      font-display:swap;
+    }
+
+    :root{
+      --bg:#070707;
+      --bg-soft:#0b0b0b;
+      --panel:#101010;
+      --panel-2:#141414;
+      --text:#f4f2ed;
+      --muted:#92918d;
+      --muted-2:#6f6e6a;
+      --line:rgba(255,255,255,.085);
+      --line-strong:rgba(255,255,255,.16);
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Englebert,Georgia,serif;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      background:
+        radial-gradient(circle at 50% -10%,rgba(255,255,255,.055),transparent 34%),
+        radial-gradient(circle at 90% 60%,rgba(255,255,255,.025),transparent 30%);
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .page{width:min(var(--max),calc(100% - 44px));margin:auto}
+
+    /* Navigation */
+    nav{
+      height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid var(--line);
+    }
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:18px;
+    }
+    .nav-dot{
+      width:9px;height:9px;border-radius:50%;
+      background:#eee;
+      box-shadow:0 0 18px rgba(255,255,255,.3);
+    }
+    .nav-links{display:flex;gap:30px;color:var(--muted);font-size:17px}
+    .nav-links a{transition:color .2s}
+    .nav-links a:hover{color:var(--text)}
+
+    /* Hero */
+    .hero{
+      min-height:calc(100vh - 84px);
+      display:grid;
+      align-items:center;
+      padding:76px 0 100px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 330px;
+      gap:90px;
+      align-items:center;
+    }
+    .eyebrow{
+      display:flex;align-items:center;gap:12px;
+      color:var(--muted);
+      font-size:18px;
+      margin-bottom:25px;
+    }
+    .eyebrow:before{
+      content:"";
+      width:34px;height:1px;background:#73736f;
+    }
+    h1{
+      margin:0;
+      font-size:clamp(72px,10.5vw,142px);
+      line-height:.79;
+      letter-spacing:-.065em;
+      font-weight:400;
+    }
+    .hero-copy{
+      max-width:680px;
+      color:#b0afaa;
+      font-size:24px;
+      line-height:1.3;
+      margin:38px 0 0;
+    }
+    .hero-copy strong{color:var(--text);font-weight:400}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+    .button{
+      min-height:49px;
+      padding:0 20px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid var(--line-strong);
+      border-radius:999px;
+      font-size:18px;
+      transition:transform .2s,background .2s,border-color .2s;
+    }
+    .button:hover{transform:translateY(-2px);background:#151515;border-color:#333}
+    .button.primary{background:#f4f2ed;color:#080808;border-color:#f4f2ed}
+    .button.primary:hover{background:#ddd9d1}
+
+    .portrait-card{position:relative;justify-self:end;width:300px}
+    .portrait{
+      width:300px;height:300px;object-fit:cover;
+      border-radius:42px;
+      border:1px solid var(--line-strong);
+      box-shadow:0 35px 80px rgba(0,0,0,.5);
+    }
+    .portrait-tag{
+      position:absolute;
+      left:-22px;
+      bottom:24px;
+      padding:11px 15px;
+      border:1px solid var(--line-strong);
+      background:rgba(8,8,8,.88);
+      backdrop-filter:blur(12px);
+      border-radius:13px;
+      color:#bdbcb7;
+      font-size:15px;
+    }
+    .portrait-caption{
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.3;
+      margin:16px 2px 0;
+    }
+
+    /* Sections */
+    section{border-top:1px solid var(--line);padding:115px 0}
+    .section-top{
+      display:flex;justify-content:space-between;align-items:end;
+      gap:40px;margin-bottom:44px;
+    }
+    .kicker{color:var(--muted);font-size:17px;margin-bottom:11px}
+    h2{
+      margin:0;
+      font-size:clamp(46px,6.5vw,78px);
+      line-height:.88;
+      letter-spacing:-.045em;
+      font-weight:400;
+    }
+    .section-intro{
+      max-width:420px;
+      color:var(--muted);
+      font-size:19px;
+      line-height:1.32;
+      margin:0;
+    }
+
+    /* Projects */
+    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .project{
+      position:relative;
+      min-height:470px;
+      padding:24px;
+      border:1px solid var(--line);
+      border-radius:27px;
+      background:linear-gradient(145deg,#111,#0c0c0c);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      transition:transform .3s,border-color .3s,background .3s;
+    }
+    .project:after{
+      content:"";
+      position:absolute;inset:0;
+      background:radial-gradient(circle at 90% 0%,rgba(255,255,255,.06),transparent 34%);
+      pointer-events:none;
+    }
+    .project:hover{
+      transform:translateY(-7px);
+      border-color:var(--line-strong);
+      background:#121212;
+    }
+    .project-number{font-size:15px;color:var(--muted-2);letter-spacing:.08em}
+    .project-logo{
+      width:105px;height:105px;
+      object-fit:cover;
+      border-radius:27px;
+      margin-top:35px;
+      box-shadow:0 20px 40px rgba(0,0,0,.25);
+    }
+    .project-content{margin-top:auto;padding-top:50px;position:relative;z-index:1}
+    .project-type{font-size:15px;color:var(--muted);margin-bottom:9px}
+    .project h3{font-size:40px;line-height:.95;font-weight:400;margin:0 0 12px}
+    .project p{font-size:18px;line-height:1.3;color:#b6b5b0;margin:0 0 23px}
+    .project-link{font-size:17px;display:inline-flex;align-items:center;gap:9px}
+    .arrow{transition:transform .2s}
+    .project:hover .arrow{transform:translateX(5px)}
+
+    /* About */
+    .about-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:80px;
+      align-items:start;
+    }
+    .about-lead{
+      font-size:clamp(39px,5vw,65px);
+      line-height:1.02;
+      letter-spacing:-.035em;
+      margin:0;
+    }
+    .about-lead em{font-style:normal;color:var(--muted)}
+    .about-copy{
+      color:#aaa9a4;
+      font-size:20px;
+      line-height:1.42;
+      margin:0;
+    }
+    .interest-list{margin-top:35px;border-top:1px solid var(--line)}
+    .interest{
+      display:flex;justify-content:space-between;gap:20px;
+      padding:15px 0;border-bottom:1px solid var(--line);
+      color:#aaa9a4;font-size:18px;
+    }
+    .interest span:last-child{color:var(--muted-2)}
+
+    /* MonoCode */
+    .studio{
+      position:relative;
+      min-height:580px;
+      border-radius:31px;
+      overflow:hidden;
+      border:1px solid var(--line-strong);
+      background:#0b0b0b;
+    }
+    .studio-header{
+      position:absolute;inset:0;
+      width:100%;height:100%;
+      object-fit:cover;
+      opacity:.72;
+    }
+    .studio-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(90deg,rgba(5,5,7,.93) 0%,rgba(5,5,7,.58) 52%,rgba(5,5,7,.25) 100%);
+    }
+    .studio-content{
+      position:relative;
+      min-height:580px;
+      padding:60px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      max-width:700px;
+    }
+    .studio-logo{
+      width:86px;height:86px;object-fit:cover;border-radius:23px;
+      margin-bottom:25px;
+    }
+    .studio h2{font-size:clamp(52px,7vw,88px)}
+    .studio-copy{
+      max-width:540px;
+      color:#bbb9b4;
+      font-size:20px;
+      line-height:1.35;
+      margin:22px 0 0;
+    }
+    .studio-meta{
+      display:flex;gap:22px;flex-wrap:wrap;
+      color:#777672;font-size:16px;margin-top:30px;
+    }
+
+    /* Future */
+    .future{
+      display:grid;
+      grid-template-columns:1fr auto;
+      align-items:center;
+      gap:30px;
+      padding:38px;
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:#0d0d0d;
+    }
+    .future h3{font-size:35px;font-weight:400;margin:0 0 8px}
+    .future p{font-size:18px;color:var(--muted);margin:0}
+    .dots{display:flex;gap:8px}.dots i{width:8px;height:8px;border-radius:50%;background:#575754}
+    .dots i:first-child{background:#d8d6cf}
+
+    footer{
+      border-top:1px solid var(--line);
+      padding:35px 0 45px;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      font-size:16px;
+    }
+    .footer-links{display:flex;gap:24px}
+    .footer-links a:hover{color:var(--text)}
+
+    @media(max-width:900px){
+      .hero-grid{grid-template-columns:1fr;gap:55px}
+      .portrait-card{justify-self:start}
+      .projects{grid-template-columns:1fr}
+      .project{min-height:420px}
+      .about-grid{grid-template-columns:1fr;gap:42px}
+      .studio-content{padding:45px}
+    }
+    @media(max-width:620px){
+      .page{width:min(var(--max),calc(100% - 28px))}
+      nav{height:72px}
+      .nav-links{gap:17px;font-size:15px}
+      .hero{padding:60px 0 78px}
+      h1{font-size:64px}
+      .hero-copy{font-size:21px}
+      .button{width:100%}
+      .portrait,.portrait-card{width:100%;max-width:270px;height:auto;aspect-ratio:1}
+      section{padding:78px 0}
+      .section-top{display:block}
+      .section-intro{margin-top:18px}
+      .studio{min-height:520px}
+      .studio-content{min-height:520px;padding:30px}
+      .future{grid-template-columns:1fr;padding:28px}
+      footer{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <nav>
+    <a class="nav-brand" href="#"><span class="nav-dot"></span>Ayush Sachdeva</a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#monocode">MonoCode</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" style="border-top:0">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Programmer · Builder · Curious mind</div>
+          <h1>Ayush<br>Sachdeva.</h1>
+          <p class="hero-copy">
+            I like <strong>building things from scratch</strong> — especially software
+            that makes learning, exploring ideas, or solving a problem a little better.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="#work">Explore my work</a>
+            <a class="button" href="https://github.com/ayushsachdeva01" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="portrait-card">
+          <img class="portrait" src="assets/profile.png" alt="Ayush Sachdeva">
+          <div class="portrait-tag">always building something</div>
+          <p class="portrait-caption">Programming, science, ideas, experiments — and a lot of curiosity in between.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="section-top">
+        <div>
+          <div class="kicker">Selected work</div>
+          <h2>Things I've built.</h2>
+        </div>
+        <p class="section-intro">Three projects that are live right now — with plenty more ideas waiting in the wings.</p>
+      </div>
+
+      <div class="projects">
+        <article class="project">
+          <div class="project-number">01 / JEE</div>
+          <img class="project-logo" src="assets/jeewise.png" alt="JEEwise logo">
+          <div class="project-content">
+            <div class="project-type">JEE preparation · Web app</div>
+            <h3>JEEwise</h3>
+            <p>JEE Main & Advanced PYQs in one focused place, built for actually practicing rather than just collecting questions.</p>
+            <a class="project-link" href="https://ayushsachdeva01.github.io/pyqs-for-all/" target="_blank" rel="noopener">Open JEEwise <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-number">02 / CHEMISTRY</div>
+          <img class="project-logo" src="assets/chemory.png" alt="Chemory logo">
+          <div class="project-content">
+            <div class="project-type">Chemistry · Learning tool</div>
+            <h3>Chemory</h3>
+            <p>A visual chemistry learning environment for revision, recall, reactions, and custom study packs.</p>
+            <a class="project-link" href="https://ayushsachdeva01.github.io/chemistry-quizzes/" target="_blank" rel="noopener">Open Chemory <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-number">03 / PHYSICS</div>
+          <img class="project-logo" src="assets/physora.png" alt="Physora logo">
+          <div class="project-content">
+            <div class="project-type">Physics · Learning tool</div>
+            <h3>Physora</h3>
+            <p>A structured physics revision tool focused on formulas, understanding, and fast JEE preparation.</p>
+            <a class="project-link" href="https://ayushsachdeva01.github.io/physics-quizzes/" target="_blank" rel="noopener">Open Physora <span class="arrow">→</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="kicker">A little about me</div>
+      <div class="about-grid">
+        <p class="about-lead">
+          I'm fascinated by <em>how things work</em> — from a line of code to the laws that describe the universe.
+        </p>
+        <div>
+          <p class="about-copy">
+            I genuinely enjoy programming: designing systems, making interfaces feel right,
+            chasing down bugs, and turning an idea that exists only in my head into something
+            I can actually use.
+            <br><br>
+            I'm equally drawn to science. Physics and chemistry are the kind of subjects that
+            make me want to keep asking “why?” — and that curiosity often finds its way into
+            the software I build.
+          </p>
+          <div class="interest-list">
+            <div class="interest"><span>Programming</span><span>build · experiment · learn</span></div>
+            <div class="interest"><span>Science</span><span>physics · chemistry · why?</span></div>
+            <div class="interest"><span>Building</span><span>ideas → working software</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="monocode">
+      <div class="kicker">Something bigger is taking shape</div>
+      <div class="studio">
+        <img class="studio-header" src="assets/monocode-header.jpg" alt="MonoCode">
+        <div class="studio-overlay"></div>
+        <div class="studio-content">
+          <img class="studio-logo" src="assets/monocode-logo.png" alt="MonoCode logo">
+          <h2>MonoCode</h2>
+          <p class="studio-copy">
+            A space for the projects I build, the ideas I explore, and the software
+            experiments that deserve to become real things.
+          </p>
+          <div class="studio-meta">
+            <span>Build</span><span>·</span><span>Solve</span><span>·</span><span>Innovate</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="future">
+        <div>
+          <h3>There is more on the way.</h3>
+          <p>This page will grow as new projects become real. This is only the beginning.</p>
+        </div>
+        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>© 2026 Ayush Sachdeva</div>
+    <div class="footer-links">
+      <a href="https://github.com/ayushsachdeva01" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://play.google.com/store/apps/dev?id=6670201133206333676" target="_blank" rel="noopener">Google Play</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
