@@ -45,7 +45,7 @@ const CONTENT = {"stories": [{"title": "Stellar Treasure", "paragraphs": ["Hey! 
       copy:'A standalone video toolbox. Sometimes you do not need a whole editor — you just need a small tool that does the thing.',
       detail:'VidKit is deliberately simple: a focused desktop utility for video tasks that do not deserve a giant editor.',
       learn:'Packaging a focused utility and turning a repeated video task into a small, standalone application.',
-      meta:['Video','Desktop','Utility'],href:'https://github.com/ayushsachdeva01/me/releases/tag/VidKit'},
+      meta:['Video','Desktop','Utility'],href:'https://github.com/ayushsachdeva01/VidKit/releases/download/v1.0.0/VidKit.exe'},
     beamly:{title:'Beamly',kicker:'Coming Soon',logo:'assets/beamly.png',
       copy:'Beamly is one of the projects I am building next. The star is here now; the public experience comes later.',
       detail:'Beamly is one of the projects sitting just beyond the current constellation. Coming Soon.',
