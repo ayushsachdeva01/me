@@ -4,11 +4,114 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>
+    (() => {
+      /*
+       * HARD DISPLAY GATE
+       * Nothing in the universe is allowed to render until this passes.
+       * Mobile/tablet browsers are rejected even when "Desktop Site" is requested.
+       */
+      const MIN_VIEWPORT_WIDTH = 1000;
+      const MIN_ASPECT_RATIO = 1.50;
+
+      const mobileUA =
+        /Android|webOS|iPhone|iPad|iPod|Windows Phone|IEMobile|Opera Mini|Mobile/i
+          .test(navigator.userAgent) ||
+        navigator.userAgentData?.mobile === true ||
+        // iPadOS can deliberately present itself as macOS in "Desktop Site" mode.
+        (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+
+      const tooSmall =
+        window.innerWidth < MIN_VIEWPORT_WIDTH ||
+        (window.innerWidth / Math.max(window.innerHeight, 1)) < MIN_ASPECT_RATIO;
+
+      const rejectionMessage =
+        mobileUA
+          ? 'This website is not built for mobile.'
+          : 'This website requires a larger desktop window.';
+
+      let rejected = mobileUA || tooSmall;
+
+      const reject = () => {
+        rejected = true;
+        document.documentElement.classList.add('display-rejected');
+        const existing = document.getElementById('__display-rejection');
+        if (existing) return;
+
+        const screen = document.createElement('div');
+        screen.id = '__display-rejection';
+        screen.setAttribute('role', 'alert');
+        screen.innerHTML = `
+          <div class="display-rejection-inner">
+            <div class="display-rejection-mark">×</div>
+            <div class="display-rejection-kicker">DISPLAY REQUIREMENT</div>
+            <h1>${rejectionMessage}</h1>
+            <p>Please open it on a desktop computer with a screen/window at least
+              <strong>${MIN_VIEWPORT_WIDTH}px wide</strong> with an aspect ratio of at least <strong>${MIN_ASPECT_RATIO}:1</strong>.</p>
+            <p class="display-rejection-note">Mobile and tablet access is intentionally disabled.</p>
+          </div>
+        `;
+        document.documentElement.appendChild(screen);
+      };
+
+      const checkDisplay = () => {
+        if (
+          mobileUA ||
+          window.innerWidth < MIN_VIEWPORT_WIDTH ||
+          (window.innerWidth / Math.max(window.innerHeight, 1)) < MIN_ASPECT_RATIO
+        ) {
+          reject();
+        }
+      };
+
+      if (rejected) reject();
+      addEventListener('resize', checkDisplay, { passive: true });
+
+      /*
+       * Asset gate:
+       * preload + decode the launch rocket and galaxy before the splash/launch
+       * screen is ever made visible. This prevents first-frame partial loading.
+       */
+      if (!rejected) {
+        document.documentElement.classList.add('assets-loading');
+
+        const loadImage = (src) => new Promise((resolve, rejectImage) => {
+          const image = new Image();
+          image.decoding = 'async';
+          image.onload = async () => {
+            try {
+              if (image.decode) await image.decode();
+            } catch (_) {}
+            resolve(image);
+          };
+          image.onerror = rejectImage;
+          image.src = src;
+        });
+
+        window.__universeBootPromise = Promise.all([
+          loadImage('assets/rocket-launch.png'),
+          loadImage('assets/galaxy.jpg')
+        ]).then(() => {
+          if (!rejected) {
+            document.documentElement.classList.remove('assets-loading');
+          }
+        }).catch(() => {
+          // Do not show a partially loaded launch screen.
+          if (!rejected) {
+            document.documentElement.classList.remove('assets-loading');
+          }
+        });
+      } else {
+        window.__universeBootPromise = Promise.resolve();
+      }
+    })();
+  </script>
   <meta name="theme-color" content="#04060b">
   <meta name="description"
     content="Ayush Sachdeva — a living, interactive constellation of things built, learned, explored, and written.">
   <title>Ayush Sachdeva — A Little Universe</title>
   <link rel="preload" as="image" href="assets/rocket-launch.png">
+  <link rel="preload" as="image" href="assets/galaxy.jpg">
   <link rel="icon" href="assets/profile.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -9118,6 +9221,92 @@
         filter: brightness(1.22)
       }
     }
+  
+    /* HARD DISPLAY GATE — intentionally blocks mobile/small-window access. */
+    html.assets-loading .launch-screen {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    html.display-rejected {
+      background: #02040a !important;
+    }
+
+    html.display-rejected body {
+      display: none !important;
+    }
+
+    #__display-rejection {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(145, 232, 255, .08), transparent 30%),
+        #02040a;
+      color: #f7f8fc;
+      font-family: Englebert, system-ui, sans-serif;
+      text-align: center;
+    }
+
+    .display-rejection-inner {
+      width: min(620px, 100%);
+      padding: 48px 36px;
+      border: 1px solid rgba(232, 239, 255, .12);
+      border-radius: 28px;
+      background: rgba(7, 11, 20, .78);
+      box-shadow: 0 30px 100px rgba(0,0,0,.45);
+    }
+
+    .display-rejection-mark {
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 24px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 50%;
+      color: #f7f8fc;
+      font: 300 38px/1 system-ui, sans-serif;
+    }
+
+    .display-rejection-kicker {
+      margin-bottom: 14px;
+      color: #91e8ff;
+      font: 400 12px/1.2 system-ui, sans-serif;
+      letter-spacing: .16em;
+    }
+
+    .display-rejection-inner h1 {
+      margin: 0 0 18px;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: .95;
+      font-weight: 400;
+      letter-spacing: -.04em;
+    }
+
+    .display-rejection-inner p {
+      margin: 0 auto;
+      max-width: 520px;
+      color: #a6b1c4;
+      font-size: 19px;
+      line-height: 1.4;
+    }
+
+    .display-rejection-inner strong {
+      color: #f7f8fc;
+      font-weight: 400;
+    }
+
+    .display-rejection-note {
+      margin-top: 18px !important;
+      color: #65728a !important;
+      font-size: 14px !important;
+    }
+
   </style>
 </head>
 
