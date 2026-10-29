@@ -7530,6 +7530,11 @@
         top: 88% !important
       }
 
+      .project-node[data-project="paytone"] {
+        left: 50% !important;
+        top: 96% !important
+      }
+
       .system-hint {
         left: 15px;
         bottom: 14px;
@@ -9482,6 +9487,7 @@
                     src="assets/axiom.png" alt="Axiom"></button>
                 <div class="project-label"><b>Axiom</b><span>Personal Assistant</span><em>Coming Soon</em></div>
               </div>
+              <div class="project-node project-major" data-project="paytone"><button aria-label="Open PayTone"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop stop-color='%23ff321d'/%3E%3Cstop offset='1' stop-color='%23ffb522'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='30' fill='url(%23g)'/%3E%3Cpath d='M28 35h53c9 0 9 12 0 12H53c12 11 8 24-8 30l28 28H53L27 77c-4-5-1-10 6-12 23-6 30-18 17-30H28c-8 0-8-12 0-12z' fill='%23fff7df'/%3E%3Cg fill='%23fff1a0'%3E%3Crect x='77' y='65' width='8' height='20' rx='4'/%3E%3Crect x='89' y='55' width='8' height='40' rx='4'/%3E%3Crect x='101' y='62' width='8' height='26' rx='4'/%3E%3C/g%3E%3C/svg%3E" alt="PayTone"></button><div class="project-label"><b>PayTone</b><span>Payment Voice Alerts</span><em>Launching Soon</em></div></div>
               <div class="system-hint"><i></i> Explore The Orbit · Click A Star To Open It · Something May Be Hiding
                 Between Them</div>
               <div class="system-legend"><span class="legend-chip">Personal Projects</span><span
@@ -10060,6 +10066,14 @@
           detail: 'Veil Chess is the focused version of the blindfold-chess idea: notation, move writing and mental reconstruction without a visible board. Coming Soon.',
           learn: 'Training UX, move notation and designing practice around cognitive load instead of visual clutter.',
           meta: ['Chess', 'Blindfold Training', 'Coming Soon'], href: '#'
+        },
+        paytone: {
+          title: 'PayTone', kicker: 'Payment Voice Alerts · Launching Soon',
+          logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop stop-color='%23ff321d'/%3E%3Cstop offset='1' stop-color='%23ffb522'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='30' fill='url(%23g)'/%3E%3Cpath d='M28 35h53c9 0 9 12 0 12H53c12 11 8 24-8 30l28 28H53L27 77c-4-5-1-10 6-12 23-6 30-18 17-30H28c-8 0-8-12 0-12z' fill='%23fff7df'/%3E%3Cg fill='%23fff1a0'%3E%3Crect x='77' y='65' width='8' height='20' rx='4'/%3E%3Crect x='89' y='55' width='8' height='40' rx='4'/%3E%3Crect x='101' y='62' width='8' height='26' rx='4'/%3E%3C/g%3E%3C/svg%3E",
+          copy: 'A payment voice-alert app that speaks incoming payment notifications aloud, helping you catch payment confirmations without constantly checking your phone.',
+          detail: 'PayTone turns supported payment notifications into spoken payment alerts, with configurable messages and voice options. It is built for practical everyday use, with Hindi and Punjabi support in mind.',
+          learn: 'Notification parsing, reliable background processing, text-to-speech, language-aware number formatting and Android integration.',
+          meta: ['Android', 'Voice Alerts', 'Hindi & Punjabi', 'Google Play Soon'], href: '#'
         }
       };
       const projectStacks = {
@@ -10071,7 +10085,8 @@
         vidkit: 'Desktop Utility · Video Tooling · Standalone Executable',
         beamly: 'Coming Soon',
         axiom: 'Personal Assistant · Coming Soon',
-        veilchess: 'Chess Notation · Training UX · Blindfold Practice · Coming Soon'
+        veilchess: 'Chess Notation · Training UX · Blindfold Practice · Coming Soon',
+        paytone: 'Flutter · Notification Parsing · Text-to-Speech · Android'
       };
       const toastTimers = new WeakMap();
       function toast(title, msg) {
@@ -10133,7 +10148,7 @@
       function resizeProjectCanvas() {const target = document.querySelector('.constellation-world') || system; const r = target.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); pcSize = {w: r.width, h: r.height}; projectCanvas.width = r.width * d; projectCanvas.height = r.height * d; projectCanvas.style.width = r.width + 'px'; projectCanvas.style.height = r.height + 'px'; pc.setTransform(d, 0, 0, d, 0, 0)}
       function nodePoint(n) {const target = document.querySelector('.constellation-world') || system; const r = target.getBoundingClientRect(); const rr = n.getBoundingClientRect(); return {x: rr.left - r.left + rr.width / 2, y: rr.top - r.top + rr.height / 2}}
       // One connected graph: every project star has at least one neighbour.
-      const projectEdges = [[0, 1], [1, 2], [2, 3], [0, 4], [4, 5], [5, 7], [7, 8], [8, 6]]; let projectClock = 0;
+      const projectEdges = [[0, 1], [1, 2], [2, 3], [0, 4], [4, 5], [5, 7], [7, 8], [8, 6], [6, 9]]; let projectClock = 0;
       function drawProjectSystem(t = 0) {pc.clearRect(0, 0, pcSize.w, pcSize.h); const pts = projectNodes.map(nodePoint); projectEdges.forEach(([a, b], idx) => {const A = pts[a], B = pts[b]; const hot = projectNodes[a].classList.contains('active') || projectNodes[b].classList.contains('active'); pc.beginPath(); pc.moveTo(A.x, A.y); pc.lineTo(B.x, B.y); pc.strokeStyle = hot ? 'rgba(145,232,255,.58)' : 'rgba(186,201,236,.12)'; pc.lineWidth = hot ? 1.7 : 1; pc.stroke(); const p = ((t * .00011 + idx / projectEdges.length) % 1); const x = A.x + (B.x - A.x) * p, y = A.y + (B.y - A.y) * p; pc.beginPath(); pc.fillStyle = hot ? 'rgba(145,232,255,.95)' : 'rgba(215,226,255,.52)'; pc.arc(x, y, hot ? 2.4 : 1.35, 0, Math.PI * 2); pc.fill()}); for (let i = 0; i < 18; i++) {const x = 80 + ((i * 97) % Math.max(100, pcSize.w - 160)); const y = 70 + ((i * 151) % Math.max(100, pcSize.h - 130)); const a = .12 + .12 * Math.sin(t * .001 + i); pc.beginPath(); pc.fillStyle = `rgba(221,231,255,${a})`; pc.arc(x, y, 1, 0, Math.PI * 2); pc.fill()} if (!reduce) requestAnimationFrame(drawProjectSystem)}
       function pulseNode(node) {projectNodes.forEach(x => x.classList.remove('active')); node.classList.add('active')}
       resizeProjectCanvas(); drawProjectSystem(); addEventListener('resize', () => {resizeProjectCanvas(); applyConstellationPan()});
