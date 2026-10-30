@@ -10068,12 +10068,12 @@
           meta: ['Chess', 'Blindfold Training', 'Coming Soon'], href: '#'
         },
         paytone: {
-          title: 'PayTone', kicker: 'Payment Voice Alerts · Launching Soon',
+          title: 'PayTone', kicker: 'Payment Voice Alerts · Available on Google Play',
           logo: 'assets/paytone_logo.png',
           copy: 'A payment voice-alert app that speaks incoming payment notifications aloud, helping you catch payment confirmations without constantly checking your phone.',
           detail: 'PayTone turns supported payment notifications into spoken payment alerts, with configurable messages and voice options. It is built for practical everyday use, with Hindi and Punjabi support in mind.',
           learn: 'Notification parsing, reliable background processing, text-to-speech, language-aware number formatting and Android integration.',
-          meta: ['Android', 'Voice Alerts', 'Hindi & Punjabi', 'Google Play Soon'], href: '#'
+          meta: ['Android', 'Voice Alerts', 'Hindi & Punjabi', 'Available on Google Play'], href: 'https://play.google.com/store/apps/details?id=com.monocode.paytone'
         }
       };
       const projectStacks = {
@@ -10183,7 +10183,7 @@
         if (p.href && p.href !== '#') {
           const a = document.createElement('a'); a.className = 'btn primary'; a.href = p.href; a.rel = 'noopener';
           if (/^https?:/i.test(p.href)) {a.target = '_blank';} else {a.setAttribute('download', 'VidKit.exe');}
-          a.innerHTML = `<span class="material-symbols-outlined">${id === 'vidkit' ? 'download' : 'north_east'}</span>${id === 'vidkit' ? 'Download VidKit.exe' : 'Open Project'}`;
+          a.innerHTML = `<span class="material-symbols-outlined">${id === 'vidkit' ? 'download' : id === 'paytone' ? 'shop' : 'north_east'}</span>${id === 'vidkit' ? 'Download VidKit.exe' : id === 'paytone' ? 'Get it on Google Play' : 'Open Project'}`;
           actions.appendChild(a);
         } else {
           const c = document.createElement('span'); c.className = 'chip';
